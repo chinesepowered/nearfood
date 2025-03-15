@@ -12,6 +12,7 @@ NEAR Food finds free food near you, on NEAR.
 - Upload processed data to xTrace for knowledge retrieval
 - User-friendly chat interface to query about food events
 - Deployable via Docker on Phala TEE
+- Demo video https://github.com/chinesepowered/nearfood/raw/refs/heads/main/nearfood-demo.mp4
 
 ## NEAR AI Hub
 
@@ -171,5 +172,7 @@ docker-compose logs frontend
 ## Performance Metrics
 
 Performance: Compared to human decision making, the agent was mostly accurate with some false positives. For example, one of the events had food but not free (was available for purchase). The prompting could be refined.
+
+On a sample run, it got 6/6 correct positives and 5/6 correct negatives.
 
 Otherwise the rest of the food list seemed like likely candidates.
