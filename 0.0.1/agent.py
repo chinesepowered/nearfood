@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from nearai.agents.environment import Environment
 import json
 import os
+import re
+import pprint
 
 
 def run(env: Environment):
@@ -52,21 +54,24 @@ def run(env: Environment):
 
     # 4. Filter events
     for event in calendar.walk('VEVENT'):
+        print("\n" + "=" * 40)  # Section separator
         summary = event.get('summary')
         description = event.get('description')
         url = event.get('location')  # changed from url = event.get('url')
+        print(f"Event: {summary}")
+
         # 5. Initial LLM check on description
         system_message_initial = {
             "role": "system",
-            "content": "Parse the description and return only true/false and nothing else. true if the event type MAY have free food (tech events, hackathons, tech demos, meetups, etc), false otherwise."
+            "content": "Parse the description and return only true/false and nothing else. true if the description suggests there's a good chance of free food, false otherwise."
         }
         user_message_initial = {"role": "user", "content": str(description)}
         try:
             llm_response_initial = env.completion([system_message_initial, user_message_initial])
-            # print("Debug initial: "+llm_response_initial)
-            # Extract the last word from the LLM's response
-            last_word = llm_response_initial.split()[-1]
-            if last_word.lower() == "true":
+            print("Initial LLM Response:")
+            pprint.pp(llm_response_initial)
+
+            if llm_response_initial.lower() == "true":
                 print(f"LLM (initial) says potential free food based on description: {summary}")
                 if url and str(url).startswith("https://"):
                     # 6. Fetch event details
@@ -85,15 +90,23 @@ def run(env: Environment):
                     # 8. Final LLM check on full event details
                     system_message_final = {
                         "role": "system",
-                        "content": "Parse text and return only true/false and nothing else. true if it's free to register and there's a mention of free food (or at least mention of food and no mention of it costing money or buying your own), false otherwise."
+                        "content": "Return how likely (very likely, likely, unlikely, very unlikely) followed by a summarization of the event details mentioning food."
                     }
                     user_message_final = {"role": "user", "content": event_text}
                     try:
                         llm_response_final = env.completion([system_message_final, user_message_final])
-                        # print("Debug: "+llm_response_final)
-                        # Extract the last word from the LLM's response
-                        last_word_final = llm_response_final.split()[-1]
-                        if last_word_final.lower() == "true":
+                        print("Final LLM Response:")
+                        pprint.pp(llm_response_final)
+
+                        # Parse the LLM response
+                        parts = llm_response_final.split(',', 1)
+                        likelihood = parts[0].strip()
+                        summary = parts[1].strip() if len(parts) > 1 else ""
+
+                        print(f"Likelihood: {likelihood}")
+                        print(f"Summary: {summary}")
+
+                        if "likely" in likelihood.lower():
                             print(f"Confirmed by LLM (final): Free food at: {summary} - {url}")
                             # 9. Sign up for event (implementation needed)
                             # signup(url)

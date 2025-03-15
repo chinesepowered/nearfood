@@ -7,7 +7,7 @@
   "details": {
     "agent": {
       "defaults": {
-        "model": "qwq-32b",
+        "model": "llama-v3p3-70b-instruct",
         "model_provider": "fireworks",
         "model_temperature": 1.0,
         "model_max_tokens": 16384
