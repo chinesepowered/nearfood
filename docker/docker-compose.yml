@@ -12,7 +12,7 @@ services:
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - XTRACE_API_KEY=${XTRACE_API_KEY}
-      - XTRACE_API_URL=${XTRACE_API_URL:-https://api.xtrace.ai/v1}
+      - XTRACE_API_URL=${XTRACE_API_URL:-https://beta0-api.xtrace.ai/v1}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/"]

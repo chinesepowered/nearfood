@@ -10,7 +10,7 @@ from datetime import datetime
 load_dotenv()
 
 # xTrace API configuration
-XTRACE_API_URL = os.environ.get("XTRACE_API_URL", "https://api.xtrace.ai/v1")
+XTRACE_API_URL = os.environ.get("XTRACE_API_URL", "https://beta0-api.xtrace.ai/v1")
 XTRACE_API_KEY = os.environ.get("XTRACE_API_KEY")
 
 class XTraceError(Exception):

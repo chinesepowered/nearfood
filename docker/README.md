@@ -40,7 +40,7 @@ Create a `.env` file in the root directory:
 ```
 GEMINI_API_KEY=your_gemini_api_key_here
 XTRACE_API_KEY=your_xtrace_api_key_here
-XTRACE_API_URL=https://api.xtrace.ai/v1
+XTRACE_API_URL=https://beta0-api.xtrace.ai/v1
 ```
 
 ### Running the Application
