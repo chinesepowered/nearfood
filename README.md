@@ -7,7 +7,8 @@ NEAR Food finds free food near you, on NEAR.
 - Scrapes Luma feed for event listing in your area
 - Analyze events to determine likelihood of free food
 - Agent 1 looks at abbreviated data to determine likeliness of free food
-- If likely, Agent 1 asks Agent 2 to fetch and analyze data to determine whether there's free food
+- If likely, Agent 1 asks Agent 2 to fetch and analyze data to determine whether there's free food. This prevents anti-bot measures, since it resembles a user looking at an event list and then clicking through to events they find interesting instead of all events.
+- Cache ical and processed results
 - Upload processed data to xTrace for knowledge retrieval
 - User-friendly chat interface to query about food events
 - Deployable via Docker on Phala TEE
