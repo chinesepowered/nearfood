@@ -12,7 +12,15 @@ NEAR Food finds free food near you, on NEAR.
 - User-friendly chat interface to query about food events
 - Deployable via Docker on Phala TEE
 
-## Architecture
+## NEAR AI Hub
+
+Deployed on NEAR AI Hub at https://app.near.ai/agents/chinesepowered.near/nearfood/latest/run
+
+## NEAR AI CLI Local Testing
+
+Local testing command: nearai agent interactive /home/nelsonlai/.nearai/registry/chinesepowered.near/nearfood/0.0.1 --local
+
+## Architecture - Phala TEE
 
 The system consists of two main components:
 
@@ -26,10 +34,6 @@ The system consists of two main components:
    - User interface for calendar processing
    - Chat interface to query about events
    - Status monitoring
-
-## Setup
-
-Deployed on NEAR AI Hub at https://app.near.ai/agents/chinesepowered.near/nearfood/latest/run
 
 ## Setup - Phala TEE
 
