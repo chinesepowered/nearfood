@@ -13,7 +13,7 @@ from ical_parser import parse_ical_data # Import the new function
 ICAL_URL = "https://api.lu.ma/ics/get?entity=discover&id=discplace-BDj7GNbGlsF7Cka"
 ICAL_FILE = "ical_data.json"
 SUMMARY_FILE = "event_summary.json"  # File to store event summaries
-MAX_EVENTS_TO_PROCESS = 5 # Maximum number of events to process
+MAX_EVENTS_TO_PROCESS = 15 # Maximum number of events to process
 
 # Define tool for fetching URL content
 def fetch_url(url: str) -> str:
@@ -141,7 +141,7 @@ def run(env: Environment):
                 if url and str(url).startswith("https://"):
                     # 6. Fetch event details
                     event_html = fetch_url(str(url))
-                    if "Error" in event_html:
+                    if False and "Error" in event_html:
                         print(event_html)
                         continue
 
@@ -178,6 +178,11 @@ def run(env: Environment):
                         "likelihood": likelihood
                     }
                     processed_events.append(event_data)
+                    
+                    # register for event if very likely
+                    if "very likely" in likelihood.lower():
+                        result = env.run_agent("eenlrnkilbgfgbblbvfklttivkckjfuujurjvk.near/latest", query="Register for event at "+url+" using realistic sounding details (name, email address, etc)")
+                        print(result)
                 else:
                     print(f"No valid URL found for event: {summary}")
                     #Create event summary
@@ -222,7 +227,7 @@ def run(env: Environment):
 
     final_prompt = {
         "role": "system",
-        "content": f"Here are the event summaries from {SUMMARY_FILE}:\n{context}\n\nBased on these summaries, provide a final summary of potential free food opportunities and their likelihood.  Also, suggest some specific events to consider attending."
+        "content": f"Here are the event summaries from {SUMMARY_FILE}:\n{context}\n\nBased on these summaries, provide a full list of potential free food opportunities and their likelihood."
     }
 
     # Make the final LLM call
